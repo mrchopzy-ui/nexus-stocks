@@ -1,3 +1,4 @@
+// v2
 const API_KEY = "63ed2d47625c4c03b27aaf0c8b99d7cf";
 
 const stocks = [
