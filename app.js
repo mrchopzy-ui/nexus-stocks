@@ -1,4 +1,4 @@
-const API_KEY = d5id2f9r01qmmfjg5l30d5id2f9r01qmmfjg5l3g;
+const API_KEY = "d5id2f9r01qmmfjg5l30d5id2f9r01qmmfjg5l3g";
 
 const stocks = [
   "RELIANCE.NS","HDFCBANK.NS","WIPRO.NS","NESTLEIND.NS","KOTAKBANK.NS",
