@@ -17,6 +17,7 @@ async function loadData() {
 
   for (let sym of stocks) {
     const q = await getQuote(sym);
+
     if (!q.price) continue;
 
     const tr = document.createElement("tr");
@@ -31,4 +32,4 @@ async function loadData() {
 }
 
 loadData();
-setInterval(loadData, 15000);
+setInterval(loadData, 20000);
