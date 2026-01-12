@@ -1,0 +1,41 @@
+const API_KEY = "NPOROP5NWEXKX5MP";
+
+const stocks = [
+  "RELIANCE.NS","HDFCBANK.NS","WIPRO.NS","NESTLEIND.NS","KOTAKBANK.NS",
+  "ADANIPOWER.NS","ITC.NS","ONGC.NS","HINDALCO.NS","GAIL.NS"
+];
+
+async function getQuote(symbol) {
+  const url =
+    `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+  return data["Global Quote"];
+}
+
+async function loadData() {
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+
+  for (let sym of stocks) {
+    const q = await getQuote(sym);
+    if (!q) continue;
+
+    const price = q["05. price"];
+    const changePercent = q["10. change percent"];
+    const high = q["03. high"];
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${sym.replace(".NS", "")}</td>
+      <td>${price}</td>
+      <td>${changePercent}</td>
+      <td>${high}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+loadData();
+setInterval(loadData, 20000);
