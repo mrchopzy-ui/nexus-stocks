@@ -1,26 +1,39 @@
-const API_KEY = "d5id2f9r01qmmfjg5l30d5id2f9r01qmmfjg5l3g";
+const API_KEY = "GYpqcfGaAA4VWUJvvPAvG8WCQd29QFZ1";
 
 const stocks = [
-  "RELIANCE.NS","HDFCBANK.NS","WIPRO.NS","NESTLEIND.NS","KOTAKBANK.NS",
-  "ADANIPOWER.NS","ITC.NS","ONGC.NS","HINDALCO.NS","GAIL.NS"
+  "RELIANCE",
+  "HDFCBANK",
+  "WIPRO",
+  "NESTLEIND",
+  "KOTAKBANK",
+  "ADANIPOWER",
+  "ITC",
+  "ONGC",
+  "HINDALCO",
+  "GAIL"
 ];
 
 async function getQuote(symbol) {
-  const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+  const res = await fetch(
+    `https://financialmodelingprep.com/api/v3/quote/${symbol}.NS?apikey=${API_KEY}`
+  );
   return res.json();
 }
 
 async function loadData() {
   const tbody = document.getElementById("tableBody");
   tbody.innerHTML = "";
-  for (let s of stocks) {
-    const q = await getQuote(s);
+
+  for (let sym of stocks) {
+    const [q] = await getQuote(sym);
+    if (!q) continue;
+
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${s.replace(".NS","")}</td>
-      <td>${q.c}</td>
-      <td>${((q.d / q.pc) * 100).toFixed(2)}%</td>
-      <td>${q.h}</td>
+      <td>${sym}</td>
+      <td>${q.price}</td>
+      <td>${(q.changesPercentage).toFixed(2)}%</td>
+      <td>${q.dayHigh}</td>
     `;
     tbody.appendChild(tr);
   }
