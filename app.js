@@ -12,7 +12,7 @@ const stocks = [
 ];
 
 async function getQuote(symbol) {
-  const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbol}`;
+  const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${symbol}`;
   const res = await fetch(url);
   const data = await res.json();
   return data.quoteResponse.result[0];
