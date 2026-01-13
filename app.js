@@ -1,21 +1,21 @@
-// v4
 const stocks = [
-  "RELIANCE",
-  "HDFCBANK",
-  "WIPRO",
-  "NESTLEIND",
-  "KOTAKBANK",
-  "ADANIPOWER",
-  "ITC",
-  "ONGC",
-  "HINDALCO",
-  "GAIL"
+  "RELIANCE.NS",
+  "HDFCBANK.NS",
+  "WIPRO.NS",
+  "NESTLEIND.NS",
+  "KOTAKBANK.NS",
+  "ADANIPOWER.NS",
+  "ITC.NS",
+  "ONGC.NS",
+  "HINDALCO.NS",
+  "GAIL.NS"
 ];
 
 async function getQuote(symbol) {
-  const url = `https://priceapi.moneycontrol.com/pricefeed/notapplicable/inidicesindia/in${symbol}`;
+  const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbol}`;
   const res = await fetch(url);
-  return res.json();
+  const data = await res.json();
+  return data.quoteResponse.result[0];
 }
 
 async function loadData() {
@@ -24,16 +24,14 @@ async function loadData() {
 
   for (let sym of stocks) {
     const q = await getQuote(sym);
-    const d = q?.data;
-
-    if (!d) continue;
+    if (!q) continue;
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${sym}</td>
-      <td>${d.pricecurrent}</td>
-      <td>${d.pricechange}%</td>
-      <td>${d.high}</td>
+      <td>${sym.replace(".NS","")}</td>
+      <td>${q.regularMarketPrice}</td>
+      <td>${q.regularMarketChangePercent?.toFixed(2)}%</td>
+      <td>${q.regularMarketDayHigh}</td>
     `;
     tbody.appendChild(tr);
   }
