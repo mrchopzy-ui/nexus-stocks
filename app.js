@@ -20,7 +20,10 @@ async function loadData() {
       const r = await fetch(`https://nse-data-api.vercel.app/stock/${s}`);
       const d = await r.json();
 
-      if (!d || !d.ltp) continue;
+      if (!d.ltp) {
+        console.error("No data for", s);
+        continue;
+      }
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -31,7 +34,7 @@ async function loadData() {
       `;
       tbody.appendChild(tr);
     } catch (err) {
-      console.error("Error fetching", s);
+      console.error("Fetch failed", s, err);
     }
   }
 }
